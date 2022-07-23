@@ -5,7 +5,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver import ActionChains
 
 from src.product_url import ProductURL
-from src.check_availability import CheckAvailability
+from src.purchase_steps.add_to_cart import AddtoCart
+from src.purchase_steps.check_availability import CheckAvailability
 from src.product_id import ProductID
 from src.site_path import SitePath
 from src.driver import WebDriver
@@ -23,6 +24,8 @@ if __name__ == '__main__':
     site_path = SitePath('https://www.uniqlo.com/us/en/products/')
     product_id = ProductID('E424873-000/00')
 
+    #TODO implement pipeline to define steps
+
     # land on page with driver initially first
     wb.driver.get(ProductURL(site_path, product_id).url)
 
@@ -32,13 +35,6 @@ if __name__ == '__main__':
         raise Exception('Page not available.')
 
     # ensure Add to cart element is found
-    try:
-        element = wb.driver.find_element(By.XPATH, '//button[text()="Add to cart"]')
-        element.click()
-        #TODO above works, need to change to top window view, and continue shopping
-
-    except Exception as e:
-        print(e)
-
-    # select size
-    wb.driver.find_element_by_id('M').click()
+    add_to_cart_element_text = '//button[text()="Add to cart"]'
+    add_to_cart = AddtoCart(wb.driver, add_to_cart_element_text)
+    add_to_cart.run()

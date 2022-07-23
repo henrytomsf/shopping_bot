@@ -4,9 +4,10 @@ from src.http_codes import HTTPStatusCodes
 from src.proxy_user_agent import ProxyUserAgent
 from src.product_id import ProductID
 from src.site_path import SitePath
+from src.purchase_steps.steps_base import PurchaseStepBase
 
 
-class CheckAvailability:
+class CheckAvailability(PurchaseStepBase):
     is_available = False
 
     def __init__(
