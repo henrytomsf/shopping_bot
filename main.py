@@ -1,5 +1,6 @@
 from typing import List
 
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver import ActionChains
 
@@ -33,8 +34,11 @@ if __name__ == '__main__':
     # ensure Add to cart element is found
     try:
         element = wb.driver.find_element(By.XPATH, '//button[text()="Add to cart"]')
-    except:
-        print('Page not available for purchasing.')
+        element.click()
+        #TODO above works, need to change to top window view, and continue shopping
+
+    except Exception as e:
+        print(e)
 
     # select size
     wb.driver.find_element_by_id('M').click()
