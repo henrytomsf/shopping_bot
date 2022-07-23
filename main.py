@@ -1,5 +1,8 @@
 from typing import List
 
+from selenium.webdriver.common.by import By
+from selenium.webdriver import ActionChains
+
 from src.product_url import ProductURL
 from src.check_availability import CheckAvailability
 from src.product_id import ProductID
@@ -24,10 +27,14 @@ if __name__ == '__main__':
 
     # check if page available
     check_avail = CheckAvailability(site_path, product_id)
-    for i in range(2): #TODO abstract this check
-        if check_avail.run():
-            break
+    if not check_avail.run():
+        raise Exception('Page not available.')
+
+    # ensure Add to cart element is found
+    try:
+        element = wb.driver.find_element(By.XPATH, '//button[text()="Add to cart"]')
+    except:
+        print('Page not available for purchasing.')
 
     # select size
     wb.driver.find_element_by_id('M').click()
-    
