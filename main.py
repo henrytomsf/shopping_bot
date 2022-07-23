@@ -1,4 +1,4 @@
-from typing import List
+import time
 
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
@@ -8,6 +8,7 @@ from src.product_url import ProductURL
 from src.purchase_steps.add_to_cart import AddtoCart
 from src.purchase_steps.check_availability import CheckAvailability
 from src.product_id import ProductID
+from src.purchase_steps.continue_shopping import ContinueShopping
 from src.site_path import SitePath
 from src.driver import WebDriver
 from src.chrome_config import ChromeConfig
@@ -38,3 +39,14 @@ if __name__ == '__main__':
     add_to_cart_element_text = '//button[text()="Add to cart"]'
     add_to_cart = AddtoCart(wb.driver, add_to_cart_element_text)
     add_to_cart.run()
+
+    # wait for new window to load
+    # hack
+    time.sleep(10)
+
+    # ensure Continue Shopping it clicked
+    continue_shopping_element_text = '//button[text()="Continue shopping"]'
+    continue_shopping = ContinueShopping(wb.driver, continue_shopping_element_text)
+    continue_shopping.run()
+
+    wb.driver.get('https://www.uniqlo.com/us/en/cart')
